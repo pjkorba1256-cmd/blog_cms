@@ -30,7 +30,7 @@
 //
 // This means we NEVER change this file when deploying — we just set VITE_API_URL
 // in the hosting platform's dashboard.
-const BASE_URL = import.meta.env.VITE_API_URL || 'https://blog-cms-oop5.onrender.com';
+const BASE_URL = import.meta.env.VITE_API_URL || 'https://blog-cms-oop5.onrender.com/api';
 
 // ─── GET ALL POSTS ───────────────────────────────────────────
 // Fetches the list of all blog posts from the backend.
