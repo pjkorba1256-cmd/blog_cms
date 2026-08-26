@@ -69,3 +69,34 @@
     display: none;
   }
 }
+
+/* --- Theme Toggle Button ---
+   A circular icon button in the navbar that switches dark/light mode.
+   We use a separate class so it doesn't inherit .btn styles.
+*/
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  font-size: 1rem;
+  cursor: pointer;
+  /* Override the global transition so only transform is separate */
+  transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.15s ease;
+}
+
+.theme-toggle:hover {
+  background-color: var(--color-bg);
+  border-color: var(--color-text-secondary);
+  transform: scale(1.1) rotate(15deg);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+

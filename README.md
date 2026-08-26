@@ -107,6 +107,7 @@ Vercel runs serverless functions — each request spins up a new process, so fil
 | ✏️ **Create Post** | Form with title + content, character counter, and validation |
 | 🔄 **Edit Post** | Pre-filled edit form, saves changes via PUT request |
 | 🗑️ **Delete Post** | Delete with confirmation dialog, redirects on success |
+| 🌙 **Dark / Light Mode** | Toggle in the navbar; preference saved in localStorage across sessions |
 | ⚡ **Loading States** | Spinner shown while API requests are in flight |
 | ❌ **Error States** | User-friendly error messages on every page |
 | 📭 **Empty State** | "No posts yet" prompt with Create button |
@@ -116,11 +117,17 @@ Vercel runs serverless functions — each request spins up a new process, so fil
 
 ## 7. Screenshots
 
-### Home Page — Posts List
-![Home Page](screenshots/home.png)
+### 🌞 Light Mode — Home Page
+![Home Page Light](screenshots/home.png)
 
-### Create New Post
-![Create Post](screenshots/create_post.png)
+### 🌙 Dark Mode — Home Page
+![Home Page Dark](screenshots/dark_home.png)
+
+### 🌞 Light Mode — Create Post
+![Create Post Light](screenshots/create_post.png)
+
+### 🌙 Dark Mode — Create Post
+![Create Post Dark](screenshots/dark_create.png)
 
 ---
 
