@@ -1,0 +1,26 @@
+# ── Node / npm ──────────────────────────────────────
+node_modules/
+npm-debug.log*
+
+# ── Environment variables ────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ── Vite / React build output ────────────────────────
+frontend/dist/
+frontend/.vite/
+
+# ── SQLite database file (generated data, not code) ──
+backend/database/blog.db
+backend/database/*.db
+
+# ── OS files ─────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Editor files ─────────────────────────────────────
+.vscode/
+.idea/
+*.suo
+*.user

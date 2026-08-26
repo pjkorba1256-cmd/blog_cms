@@ -1,0 +1,71 @@
+/* components/Navbar.css */
+
+.navbar {
+  height: var(--navbar-height);
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;       /* stays at the top when scrolling */
+  top: 0;
+  z-index: 100;           /* stays above other page content */
+  box-shadow: var(--shadow-sm);
+}
+
+.navbar-inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Brand / Logo */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  letter-spacing: -0.3px;
+}
+
+.navbar-logo {
+  font-size: 1.4rem;
+}
+
+/* Nav links group */
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.navbar-link {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--border-radius-sm);
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.navbar-link:hover {
+  color: var(--color-text-primary);
+  background-color: var(--color-bg);
+}
+
+.navbar-link.active {
+  color: var(--color-accent);
+  background-color: var(--color-accent-light);
+}
+
+/* Mobile: hide extra links on very small screens */
+@media (max-width: 480px) {
+  .navbar-brand {
+    font-size: var(--font-size-lg);
+  }
+  .navbar-link {
+    display: none;
+  }
+}
