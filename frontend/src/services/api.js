@@ -22,9 +22,15 @@
 */
 
 // Base URL for all API calls.
-// During development, the backend runs on port 5000.
-// If you change the port in server.js, update it here too.
-const BASE_URL = 'http://localhost:5000/api';
+//
+// CONCEPT — Environment Variables in Vite:
+// Vite exposes variables prefixed with VITE_ to your React code via import.meta.env.
+// - In development: reads from frontend/.env
+// - In production (Vercel): reads from environment variables set in the Vercel dashboard
+//
+// This means we NEVER change this file when deploying — we just set VITE_API_URL
+// in the hosting platform's dashboard.
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 // ─── GET ALL POSTS ───────────────────────────────────────────
 // Fetches the list of all blog posts from the backend.

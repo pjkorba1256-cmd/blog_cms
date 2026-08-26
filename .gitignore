@@ -6,6 +6,7 @@ npm-debug.log*
 .env
 .env.local
 .env.*.local
+# Note: .env.example IS committed (shows required variables without real values)
 
 # ── Vite / React build output ────────────────────────
 frontend/dist/

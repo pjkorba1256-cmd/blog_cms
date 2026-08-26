@@ -48,15 +48,22 @@ const postRoutes = require('./routes/postRoutes');
 require('./database/database');
 
 const app = express();         // create the Express application
-const PORT = 5000;
+
+// process.env.PORT is set automatically by Render (and other hosting platforms).
+// We fall back to 5000 for local development.
+const PORT = process.env.PORT || 5000;
 
 // ─── Middleware ───────────────────────────────────────────────
-// app.use() registers middleware that runs for EVERY request.
 
-// CORS: allows http://localhost:5173 (React) to call this API.
-// Without this, the browser would reject all API responses from the frontend.
+// CORS: In production (Render), we allow any origin so the Vercel frontend
+// can reach this API regardless of its exact URL.
+// In development, this still allows localhost:5173.
+const allowedOrigins = process.env.NODE_ENV === 'production'
+  ? true                            // allow all origins in production
+  : 'http://localhost:5173';        // only our dev frontend locally
+
 app.use(cors({
-  origin: 'http://localhost:5173',  // only allow our React dev server
+  origin: allowedOrigins,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
 
