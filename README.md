@@ -8,14 +8,14 @@ A simple CRUD application that allows users to create, read, edit, and delete bl
 
 ## Features
 
-- ✅ View all blog posts in a responsive grid
-- ✅ Search posts by title or content
-- ✅ View an individual blog post
-- ✅ Create a new blog post with form validation
-- ✅ Edit an existing blog post
-- ✅ Delete a post with confirmation dialog
-- ✅ Loading, error, and empty states on every page
-- ✅ Responsive design (desktop + mobile)
+-  View all blog posts in a responsive grid
+-  Search posts by title or content
+-  View an individual blog post
+-  Create a new blog post with form validation
+-  Edit an existing blog post
+-  Delete a post with confirmation dialog
+-  Loading, error, and empty states on every page
+-  Responsive design (desktop + mobile)
 
 ## Tech Stack
 
