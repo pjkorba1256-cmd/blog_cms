@@ -59,8 +59,26 @@ app.use((err, req, res, next) => {
   });
 });
 
-// ─── Vercel Export ────────────────────────────────────────────
-// Vercel handles starting the HTTP server.
-// We only export the Express application.
+// ─── Export + Local Start ─────────────────────────────────────
+// module.exports = app   → Vercel imports this and handles the HTTP server itself.
+//
+// require.main === module → true ONLY when this file is run directly:
+//   node server.js  (local dev)
+//
+// It is false when the file is require()'d by another system (e.g. Vercel),
+// so app.listen() is SKIPPED on Vercel and RUNS locally. Best of both worlds.
 
 module.exports = app;
+
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running at http://localhost:${PORT}`);
+    console.log(`📋 API endpoints:`);
+    console.log(`   GET    http://localhost:${PORT}/api/posts`);
+    console.log(`   POST   http://localhost:${PORT}/api/posts`);
+    console.log(`   GET    http://localhost:${PORT}/api/posts/:id`);
+    console.log(`   PUT    http://localhost:${PORT}/api/posts/:id`);
+    console.log(`   DELETE http://localhost:${PORT}/api/posts/:id`);
+  });
+}
