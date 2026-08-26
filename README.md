@@ -123,11 +123,6 @@ Vercel runs serverless functions — each request spins up a new process, so fil
 ### 🌙 Dark Mode — Home Page
 ![Home Page Dark](screenshots/dark_home.png)
 
-### 🌞 Light Mode — Create Post
-![Create Post Light](screenshots/create_post.png)
-
-### 🌙 Dark Mode — Create Post
-![Create Post Dark](screenshots/dark_create.png)
 
 ---
 
