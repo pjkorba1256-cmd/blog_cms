@@ -1,108 +1,196 @@
-# Blog CMS
+# 🔥 Blog CMS — Full-Stack Content Management System
 
-A full-stack blog / content management system built as a college club recruitment task.
+> A full-stack blog management application built as a college club recruitment project.
 
-## Overview
+**🌐 Live Demo:** [https://blog-cms-owgy.vercel.app](https://blog-cms-owgy.vercel.app)  
+**🔗 Backend API:** [https://blog-cms-oop5.onrender.com/api/posts](https://blog-cms-oop5.onrender.com/api/posts)
 
-A simple CRUD application that allows users to create, read, edit, and delete blog posts. Built with a React frontend, Node.js + Express backend, and SQLite database.
+---
 
-## Features
+## 1. Project Title
 
--  View all blog posts in a responsive grid
--  Search posts by title or content
--  View an individual blog post
--  Create a new blog post with form validation
--  Edit an existing blog post
--  Delete a post with confirmation dialog
--  Loading, error, and empty states on every page
--  Responsive design (desktop + mobile)
+**Blog CMS** — A Full-Stack Blog / Content Management System
 
-## Tech Stack
+---
 
-| Layer | Technology |
-|---|---|
-| Frontend | React 19, Vite, React Router |
-| Backend | Node.js, Express.js |
-| Database | SQLite (via better-sqlite3) |
-| Styling | Vanilla CSS |
-| HTTP | Fetch API |
+## 2. Objective
 
-## Project Structure
+The objective of this project is to build a production-ready, full-stack web application that demonstrates core software engineering skills:
+
+- Designing and consuming a RESTful API
+- Persisting data in a relational database (SQLite)
+- Building a reactive frontend with React
+- Deploying a split frontend/backend architecture to the cloud (Vercel + Render)
+- Managing environment-specific configuration using environment variables
+
+---
+
+## 3. Problem Statement
+
+Content management is a fundamental need in web development. Most beginners either:
+- Build a frontend with no real backend (data is lost on refresh), or
+- Use a bloated CMS framework without understanding how data flows end-to-end.
+
+This project solves that by building a **minimal but complete CMS from scratch** — where every layer (UI → API → Database) is hand-written and understood, not abstracted away.
+
+**Key challenges solved:**
+- How does a React component fetch and display data from a server?
+- How does an Express backend validate and store form input?
+- How do you keep dev and production environments separate without changing code?
+- How do you deploy a Node.js + SQLite backend to a cloud server?
+
+---
+
+## 4. Tech Stack
+
+| Layer | Technology | Purpose |
+|-------|-----------|---------|
+| **Frontend** | React 19 + Vite | Component-based UI with fast HMR dev server |
+| **Routing** | React Router v7 | Client-side navigation (SPA) |
+| **Backend** | Node.js + Express 5 | RESTful HTTP API server |
+| **Database** | SQLite via `better-sqlite3` | Embedded relational database (no separate server) |
+| **Styling** | Vanilla CSS | Custom responsive design without frameworks |
+| **HTTP Client** | Fetch API (built-in) | Making API requests from the browser |
+| **Frontend Deploy** | Vercel | CDN-hosted static React build |
+| **Backend Deploy** | Render | Persistent Node.js process with disk-backed SQLite |
+| **Env Config** | Vite `import.meta.env` | Environment-specific API URL without code changes |
+
+---
+
+## 5. Implementation Approach
+
+The application follows a clean **separation of concerns** architecture:
 
 ```
-blog-cms/
-├── frontend/               # React application (Vite)
-│   └── src/
-│       ├── components/
-│       │   ├── Navbar.jsx
-│       │   ├── PostCard.jsx
-│       │   └── PostForm.jsx
-│       ├── pages/
-│       │   ├── Home.jsx
-│       │   ├── CreatePost.jsx
-│       │   ├── PostDetails.jsx
-│       │   └── EditPost.jsx
-│       ├── services/
-│       │   └── api.js      # All fetch() calls in one place
-│       ├── App.jsx         # Router setup
-│       └── index.css       # Global styles
-│
-└── backend/                # Express API
-    ├── server.js           # Entry point, middleware, route mounting
-    ├── routes/
-    │   └── postRoutes.js   # Route → handler mappings
-    ├── controllers/
-    │   └── postController.js  # CRUD logic + SQL queries
-    └── database/
-        ├── database.js     # SQLite connection + schema
-        └── blog.db         # Auto-generated SQLite database file
+Browser
+   ↓
+Vercel (React Frontend — static files)
+   ↓  HTTPS request
+Render (Express Backend — running Node.js)
+   ↓  SQL query
+SQLite (blog.db — on Render's persistent disk)
+   ↓  JSON response
+React UI updates
 ```
 
-## Installation
+### Key Design Decisions
+
+**1. Centralized API Service (`src/services/api.js`)**  
+All `fetch()` calls live in one file. Pages never call `fetch()` directly — they call named functions like `getPosts()`, `createPost()`. This means if the backend URL changes, only one file needs updating.
+
+**2. Environment Variables for API URL**  
+```js
+const BASE_URL = import.meta.env.VITE_API_URL || 'https://blog-cms-oop5.onrender.com/api';
+```
+- Locally → reads `VITE_API_URL=http://localhost:5000/api` from `.env`
+- On Vercel → reads `VITE_API_URL` from Vercel dashboard environment variables
+- Same codebase, zero code changes between environments
+
+**3. SQLite on Render (not Vercel)**  
+Vercel runs serverless functions — each request spins up a new process, so file-based SQLite would lose data. Render runs a persistent process, keeping `blog.db` alive on disk.
+
+**4. MVC-style Backend Structure**  
+- `server.js` → middleware + route mounting
+- `routes/postRoutes.js` → URL → handler mapping
+- `controllers/postController.js` → business logic + SQL queries
+- `database/database.js` → schema + connection
+
+---
+
+## 6. Features
+
+| Feature | Description |
+|---------|------------|
+| 📋 **View All Posts** | Home page shows all posts in a responsive card grid with post count |
+| 🔍 **Search Posts** | Real-time client-side search filters posts by title or content |
+| 📖 **Read Post** | Individual post detail page with formatted date |
+| ✏️ **Create Post** | Form with title + content, character counter, and validation |
+| 🔄 **Edit Post** | Pre-filled edit form, saves changes via PUT request |
+| 🗑️ **Delete Post** | Delete with confirmation dialog, redirects on success |
+| ⚡ **Loading States** | Spinner shown while API requests are in flight |
+| ❌ **Error States** | User-friendly error messages on every page |
+| 📭 **Empty State** | "No posts yet" prompt with Create button |
+| 📱 **Responsive Design** | Works on desktop and mobile screens |
+
+---
+
+## 7. Screenshots
+
+### Home Page — Posts List
+![Home Page](screenshots/home.png)
+
+### Create New Post
+![Create Post](screenshots/create_post.png)
+
+---
+
+## 8. How to Run
 
 ### Prerequisites
-- Node.js (v18+)
-- npm
+- [Node.js v18+](https://nodejs.org/)
+- npm (comes with Node.js)
 
-### Frontend setup
+### Clone the Repository
 
 ```bash
-cd frontend
-npm install
+git clone https://github.com/pjkorba1256-cmd/blog_cms.git
+cd blog-cms
 ```
 
-### Backend setup
+### Backend Setup
 
 ```bash
 cd backend
 npm install
-```
-
-## Running the Application
-
-Open **two terminal windows**.
-
-**Terminal 1 — Backend:**
-```bash
-cd backend
 npm start
-# Server runs at http://localhost:5000
+# ✅ Server running at http://localhost:5000
+# ✅ SQLite database auto-created at backend/database/blog.db
 ```
 
-**Terminal 2 — Frontend:**
+### Frontend Setup
+
+Open a **second terminal**:
+
 ```bash
 cd frontend
-npm run dev
-# App runs at http://localhost:5173
+npm install
 ```
 
-Then open **http://localhost:5173** in your browser.
+Create the local environment file:
 
-## Database
+```bash
+# Create frontend/.env
+echo "VITE_API_URL=http://localhost:5000/api" > .env
+```
 
-SQLite is used for persistent storage. The database file (`blog.db`) is created automatically when the backend starts for the first time. No separate database server is needed.
+Start the dev server:
 
-The `posts` table schema:
+```bash
+npm run dev
+# ✅ App running at http://localhost:5173
+```
+
+Open **http://localhost:5173** in your browser.
+
+### API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/posts` | Get all posts |
+| `GET` | `/api/posts/:id` | Get one post by ID |
+| `POST` | `/api/posts` | Create a new post |
+| `PUT` | `/api/posts/:id` | Update an existing post |
+| `DELETE` | `/api/posts/:id` | Delete a post |
+| `GET` | `/api/health` | Health check |
+
+**Example — Create a post via curl:**
+```bash
+curl -X POST http://localhost:5000/api/posts \
+  -H "Content-Type: application/json" \
+  -d '{"title": "My First Post", "content": "Hello, world!"}'
+```
+
+### Database Schema
 
 ```sql
 CREATE TABLE posts (
@@ -114,42 +202,49 @@ CREATE TABLE posts (
 );
 ```
 
-## API Endpoints
+### Project Structure
 
-| Method | Endpoint | Description | Status Codes |
-|--------|----------|-------------|--------------|
-| GET | `/api/posts` | Get all posts | 200, 500 |
-| GET | `/api/posts/:id` | Get one post | 200, 404, 500 |
-| POST | `/api/posts` | Create a post | 201, 400, 500 |
-| PUT | `/api/posts/:id` | Update a post | 200, 400, 404, 500 |
-| DELETE | `/api/posts/:id` | Delete a post | 200, 404, 500 |
-
-**Health check:** `GET /api/health`
-
-### Example request (Create Post)
-
-```bash
-curl -X POST http://localhost:5000/api/posts \
-  -H "Content-Type: application/json" \
-  -d '{"title": "My First Post", "content": "Hello, world!"}'
+```
+blog-cms/
+├── frontend/                  # React + Vite application
+│   ├── .env                   # Local environment variables (gitignored)
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Navbar.jsx     # Top navigation bar
+│   │   │   ├── PostCard.jsx   # Post preview card component
+│   │   │   └── PostForm.jsx   # Reusable form for create/edit
+│   │   ├── pages/
+│   │   │   ├── Home.jsx       # Post list + search
+│   │   │   ├── CreatePost.jsx # New post form
+│   │   │   ├── PostDetails.jsx# Individual post view
+│   │   │   └── EditPost.jsx   # Edit post form
+│   │   ├── services/
+│   │   │   └── api.js         # ALL fetch() calls in one place
+│   │   ├── App.jsx            # Router setup
+│   │   └── index.css          # Global styles
+│   └── vercel.json            # Vercel SPA routing config
+│
+└── backend/                   # Node.js + Express API
+    ├── server.js              # Entry point, middleware, error handling
+    ├── routes/
+    │   └── postRoutes.js      # URL → controller mappings
+    ├── controllers/
+    │   └── postController.js  # CRUD logic + SQL queries
+    └── database/
+        ├── database.js        # SQLite connection + schema creation
+        └── blog.db            # Auto-generated database file (gitignored)
 ```
 
-### Example response
+---
 
-```json
-{
-  "id": 1,
-  "title": "My First Post",
-  "content": "Hello, world!",
-  "created_at": "2026-08-26 11:00:00",
-  "updated_at": "2026-08-26 11:00:00"
-}
-```
+## 9. Future Improvements
 
-## Future Improvements
-
-- Add pagination for large post lists
-- Add image upload support
-- Add user authentication
-- Add post categories / tags
-- Add rich text editor
+| Improvement | Why |
+|-------------|-----|
+| **User Authentication** | Currently anyone can create/edit/delete posts. JWT-based login would restrict write access. |
+| **Rich Text Editor** | Replace the plain textarea with a Markdown or WYSIWYG editor for formatted posts. |
+| **Image Upload** | Allow posts to include a cover image (would require cloud storage like Cloudinary). |
+| **Pagination** | Currently all posts are fetched at once. Pagination with `LIMIT/OFFSET` would scale better. |
+| **Post Categories / Tags** | Let authors organize posts by topic for easier discovery. |
+| **PostgreSQL Migration** | SQLite is great for this project, but for multi-user production apps, PostgreSQL on Supabase or Railway would be more robust. |
+| **Post Draft / Published Status** | Add a `status` column so authors can save drafts before publishing. |
