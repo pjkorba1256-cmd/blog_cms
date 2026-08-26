@@ -14,6 +14,8 @@ frontend/.vite/
 # ── SQLite database file (generated data, not code) ──
 backend/database/blog.db
 backend/database/*.db
+backend/database/*.db-shm
+backend/database/*.db-wal
 
 # ── OS files ─────────────────────────────────────────
 .DS_Store
